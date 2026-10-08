@@ -293,7 +293,7 @@ models/*.pth
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/locphamv/student-performance-prediction.git
+git clone https://github.com/locphamv/pytorch-learning.git
 cd pytorch-learning
 ```
 
