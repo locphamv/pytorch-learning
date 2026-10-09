@@ -3,3 +3,6 @@ __pycache__/
 .DS_Store
 models/*.pth
 models/*.pt
+data/*.jpeg
+data/*.png
+data/*.jpg
