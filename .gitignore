@@ -9,3 +9,6 @@ data/*.jpg
 data/cifar-10-batches-py/
 data/cifar-10-python.tar.gz
 outputs/
+data/oxford-iiit-pet/
+runs/
+
