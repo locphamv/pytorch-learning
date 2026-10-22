@@ -22,7 +22,7 @@ TEST_SAMPLES = 1000
 RUN_FINAL_TEST = False
 
 MODEL_PATH = Path(
-    "models/resnet18_cifar10.pth"
+    "models/resnet18_cifar10_finetuned.pth"
 )
 
 
