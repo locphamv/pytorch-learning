@@ -57,6 +57,7 @@ def make_loaders():
         batch_size=BATCH_SIZE,
         shuffle=False,
         num_workers=0,
+        generator=torch.Generator().manual_seed(SEED + 2),
     )
 
     return train_loader, val_loader, list(dataset.classes), train_indices, val_indices
@@ -172,7 +173,10 @@ def main() -> None:
     trainable = sum(p.numel() for p in model.parameters() if p.requires_grad)
     print("Trainable parameters:", trainable)
 
-    images, labels = next(iter(train_loader))
+    # Inspect a deterministic validation batch without advancing training shuffle.
+    images, labels = next(iter(val_loader))
+    # inference_mode disables autograd, but only eval freezes BatchNorm/dropout.
+    model.eval()
     with torch.inference_mode():
         shape = tuple(model(images.to(device)).shape)
     print("Image batch:", tuple(images.shape))
