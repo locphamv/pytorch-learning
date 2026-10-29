@@ -144,7 +144,39 @@ def main() -> None:
 
     print("Normalized first box:", normalized)
     print("All checks passed.")
+    print("\n--- RUNNING EXERCISES ---")
 
+    # 1. Exercise A: Tính IoU bằng tay (400 / 2800 = 1/7)
+    box_a = torch.tensor([[0.0, 0.0, 40.0, 40.0]])
+    box_b = torch.tensor([[20.0, 20.0, 60.0, 60.0]])
+    iou_ex_a = pairwise_iou(box_a, box_b).item()
+    print("Exercise A IoU:", round(iou_ex_a, 6))
+    assert abs(iou_ex_a - (400.0 / 2800.0)) < 1e-6
+
+    # 2. Exercise B: Kiểm tra rời nhau (0.0) và trùng khít (1.0)
+    disjoint_box = torch.tensor([[100.0, 100.0, 140.0, 140.0]])
+    iou_disjoint = pairwise_iou(box_a, disjoint_box).item()
+    iou_identical = pairwise_iou(box_a, box_a).item()
+    print(
+        f"Exercise B - Disjoint IoU: {iou_disjoint}, Identical IoU: {iou_identical}"
+    )
+    assert iou_disjoint == 0.0
+    assert iou_identical == 1.0
+
+    # 3. Exercise C: Kiểm tra hàm xywh_to_xyxy tự viết với torchvision
+    ex_c_boxes = torch.tensor(
+        [
+            [10.0, 20.0, 40.0, 30.0],
+            [0.0, 0.0, 20.0, 20.0],
+        ]
+    )
+    custom_xyxy = xywh_to_xyxy(ex_c_boxes)
+    expected_xyxy = box_convert(ex_c_boxes, in_fmt="xywh", out_fmt="xyxy")
+    torch.testing.assert_close(custom_xyxy, expected_xyxy)
+    print("Exercise C xywh -> xyxy:\n", custom_xyxy)
+    print("Exercise C assertion: Passed!")
+
+    print("\nAll checks passed.")
 
 if __name__ == "__main__":
     main()
